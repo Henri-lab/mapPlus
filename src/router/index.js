@@ -40,7 +40,7 @@ const router = createRouter({
           components: {
             cmw: () => import('@/views/PATH_Map_ol/index.vue')
           },
-          props: true, // 将路由参数作为组件属性传递
+          props: true,
           meta: {
             name: 'mapSearch'
           }

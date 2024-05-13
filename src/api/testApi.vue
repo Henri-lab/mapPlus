@@ -31,13 +31,13 @@ onMounted(() => {
   //   console.log(res.cities, 'cityAndHotCity-cities');
   // });
 
-  //   getCityAndHotCity().then((res) => {
-  //     for (let key in res.cities) {
-  //       if (key === 'A') {
-  //         console.log(res.cities[key]);
-  //       }
-  //     }
-  //   });
+    // getCityAndHotCity().then((res) => {
+    //   for (let key in res.cities) {
+    //     if (key === 'A') {
+    //       console.log(res.cities[key]);
+    //     }
+    //   }
+    // });
 
   // getCityAndHotCity().then((res) => {
   //   for (let key in res.cities) {

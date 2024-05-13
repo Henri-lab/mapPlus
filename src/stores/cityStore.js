@@ -12,7 +12,7 @@ export const useCityStore = defineStore('cityStore', () => {
     const address = await getIpAddress()
     cityUser.value = address.city
   }
-  
+
   const cityListVisited = ref([])
   // 🔴
   const add_cityListVisited = (cityName) => {
@@ -50,12 +50,29 @@ export const useCityStore = defineStore('cityStore', () => {
   const getCityByCapital = async (capital) => {
     if (typeof capital !== 'string' || capital.length !== 1) return
     const res = await getCityAndHotCity()
+    if (!res) return
     const cities = res.cities
     for (let key in cities) {
       if (key === capital) {
         return cities[key]
       }
     }
+  }
+
+  const getAllCity = async () => {
+    let allCity = []
+    const res = await getCityAndHotCity()
+    if (!res) return []
+    const cities = res.cities
+    console.log(cities)
+    for (let key in cities) {
+      if (key === 'A')
+        cities[key].forEach((city) => {
+          addProperty(city, 'capital', 'A')
+          allCity.put(city)
+        })
+    }
+    return allCity
   }
 
   const requeseWeather_base_byCityName = async (cityName) => {
@@ -186,6 +203,8 @@ export const useCityStore = defineStore('cityStore', () => {
     getCityCoordinates,
     getCache,
     setCache,
-    
+    getAllCity,
+
+
   }
 })

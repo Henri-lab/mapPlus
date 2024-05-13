@@ -13,8 +13,10 @@
     "element-plus": "^2.7.2",
     "pinia": "^2.1.7",
     "uuid": "^9.0.1",
+    "vant": "^4.9.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.6.0-beta.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

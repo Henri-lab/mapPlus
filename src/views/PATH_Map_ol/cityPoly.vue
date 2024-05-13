@@ -87,6 +87,8 @@ onMounted(async () => {
   //     clearInterval(time);
   //   });
 
+
+  
   //test
   //   const lay = await olMapStore.getLayerWithPolygonByAdcodeByAliyun(
   //     'testCity' + 'https://datav.aliyun.com/' + `adcode${adcode}`,

@@ -23,7 +23,7 @@ onMounted(() => {
   olMapStore.setCache();
   // test
   // olMapStore.zoomToByCityName('上海市',$map)
-  // console.log(_city);
+  // console.log(_city,'result');
 });
 </script>
 

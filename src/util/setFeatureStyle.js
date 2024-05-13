@@ -1,7 +1,8 @@
 function featureStyle(options) {
   return new ol.style.Style({
     fill: new ol.style.Fill({
-      color: options.fillColor || 'rgba(255, 255, 255, 0.4)' // 默认填充颜色为白色透明
+      color: options.fillColor || 'rgba(255, 255, 255, 0.4)',// 默认填充颜色为白色透明
+      fillOpacity: options.fillOpacity || 1,
     }),
     stroke: new ol.style.Stroke({
       color: options.strokeColor || '#3399CC', // 默认边框颜色为蓝色

@@ -8,6 +8,7 @@
     <city-map></city-map>
     <CityZoomTo></CityZoomTo>
     <city-weather></city-weather>
+    <city-poly></city-poly>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import { onMounted } from 'vue';
 import CityMap from '@/views/PATH_Map_ol/CityMap.vue';
 import CityZoomTo from '@/views/PATH_Map_ol/CityZoomTo.vue';
 import CityWeather from './CityWeather.vue';
+import cityPoly from './cityPoly.vue';
 
 onMounted(() => {});
 </script>

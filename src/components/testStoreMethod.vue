@@ -13,13 +13,16 @@ onMounted(async () => {
   // 请求测试
   // const res=await cityStore.getCityResponse('wa');
   // console.log(res)
-  const res=await cityStore.getWeatherByCityName('北京')
-  console.log(res)
+  // const res=await cityStore.getWeatherByCityName('北京')
+  // console.log(res)
+  // // cityStore.setCache()
+
 
   // cityInfo的缓存测试
   //   const res = await cityStore.getCityCoordinates('北京')
   //   console.log(res)
   //   cityStore.setCache()
+  
   //   await cityStore.getCityCoordinates('上海')
   //   cityStore.setCache()
   //   await cityStore.getCityCoordinates('上海')

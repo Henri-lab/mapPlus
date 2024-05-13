@@ -12,8 +12,7 @@ export const useCityStore = defineStore('cityStore', () => {
     const address = await getIpAddress()
     cityUser.value = address.city
   }
-
-
+  
   const cityListVisited = ref([])
   // 🔴
   const add_cityListVisited = (cityName) => {
@@ -94,28 +93,6 @@ export const useCityStore = defineStore('cityStore', () => {
 
 
   // ----------------------------------------------------------------
-  // 🔴
-  const localCityWithWeatherHistory = ref([])
-  const getWeatherByCityName = async (cityName) => {
-    let city_wtr = {}
-    const cityCache = getCache()
-    if (cityCache.length > 0) {
-      const cityInfo = cityCache.find(cityInfo => cityInfo.city === cityName)
-      if (cityInfo) {
-        const adcode = cityInfo.adcode
-        city_wtr = await requeseWeather_base(adcode)
-
-      } else
-        city_wtr = await requeseWeather_base_byCityName(cityName)
-
-    } else {
-      city_wtr = await requeseWeather_base_byCityName(cityName)
-      if (city_wtr.city === cityUser.value) localCityWithWeatherHistory.push(city_wtr)
-    }
-    return city_wtr
-  }
-
-
   async function requestCoordinatesByCityName(cityName) {
     const cityInfo = await createCityInfoByCityName(cityName)
     if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
@@ -158,6 +135,26 @@ export const useCityStore = defineStore('cityStore', () => {
     localStorageManager('set/random', 'cityInfoCache_cityStore-', cityInfoCache_cityStore.value)
   }
   // 🔴
+  const localCityWithWeatherHistory = ref([])
+  const getWeatherByCityName = async (cityName) => {
+    let city_wtr = {}
+    const cityCache = getCache()
+    if (cityCache.length > 0) {
+      const cityInfo = cityCache.find(cityInfo => cityInfo.city === cityName)
+      if (cityInfo) {
+        const adcode = cityInfo.adcode
+        city_wtr = await requeseWeather_base(adcode)
+
+      } else
+        city_wtr = await requeseWeather_base_byCityName(cityName)
+
+    } else {
+      city_wtr = await requeseWeather_base_byCityName(cityName)
+      if (city_wtr.city === cityUser.value) localCityWithWeatherHistory.push(city_wtr)
+    }
+    return city_wtr
+  }
+  // 🔴
   const getCityCoordinates = async (cityName) => {
     const cityCache = getCache()
     if (cityCache.length > 0) {
@@ -187,7 +184,8 @@ export const useCityStore = defineStore('cityStore', () => {
     getWeatherByCityName,
     cityInfoCache_cityStore,
     getCityCoordinates,
+    getCache,
     setCache,
-
+    
   }
 })

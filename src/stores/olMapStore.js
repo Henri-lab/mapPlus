@@ -17,7 +17,12 @@ export const useOlMapStore = defineStore('olMapStore', () => {
     const gdXYZ_wrapX = ref(false)
     const gdTile_name = ref('basic')
 
+    // 🔴
+    const getCityAdcode = async (city) => {
+        const res = await getGeoByAddress(city)
+        return res.adcode
 
+    }
     // 获取阿里云的图层数据
     const getUrlAliyun = (adcode) => {
         return `https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=${adcode}_full`
@@ -72,7 +77,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
         latitude.value = coordinates[1]
         const level = res.level
         animateZ = getAnimateZoomByLevel(level)
-        console.log('zoomToByCityName request-geo')
+        // console.log('zoomToByCityName request')
         // 缓存
         const city = res.city
         const adcode = res.adcode
@@ -161,6 +166,8 @@ export const useOlMapStore = defineStore('olMapStore', () => {
         getUrlAliyun,
         zoomToByCityName,
         cityInfoCache_olMapStore,
-        setCache
+        getCache,
+        setCache,
+        getCityAdcode
     }
 })

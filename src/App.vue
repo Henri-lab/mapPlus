@@ -9,7 +9,7 @@ import '@/assets/main.css';
   <testApi />
   <testStoreMethod />
   <div id="app">
-    <!-- <router-view name="cmw"></router-view> -->
+    <router-view name="cmw"></router-view>
   </div>
 </template>
 

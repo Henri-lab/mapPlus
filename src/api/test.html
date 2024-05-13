@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        // fetch('http://39.103.151.139:8000/city').then(res => console.log(res));
+        async function request() {
+            const res = await axios.get('http://39.103.151.139:8000/city')
+            console.log(res)
+        }
+        request()
+    </script>
+</body>
+
+</html>

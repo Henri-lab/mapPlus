@@ -58,10 +58,11 @@ export const useCityStore = defineStore('cityStore', () => {
       }
     }
   }
-  
+
   const requeseWeather_base_byCityName = async (cityName) => {
-    const cityInfo = createCityInfoByCityName(cityName)
-    if (!cityInfo) return 
+    const cityInfo = await createCityInfoByCityName(cityName)
+
+    if (!cityInfo) return
     if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
       cityInfoCache_cityStore.value.push(cityInfo)
     const adcode = cityInfo.adcode
@@ -108,7 +109,7 @@ export const useCityStore = defineStore('cityStore', () => {
         city_wtr = await requeseWeather_base_byCityName(cityName)
 
     } else {
-      city_wtr = await requeseWeather_base_byCityName(adcode)
+      city_wtr = await requeseWeather_base_byCityName(cityName)
       if (city_wtr.city === cityUser.value) localCityWithWeatherHistory.push(city_wtr)
     }
     return city_wtr
@@ -116,7 +117,7 @@ export const useCityStore = defineStore('cityStore', () => {
 
 
   async function requestCoordinatesByCityName(cityName) {
-    const cityInfo = createCityInfoByCityName(cityName)
+    const cityInfo = await createCityInfoByCityName(cityName)
     if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
       cityInfoCache_cityStore.value.push(cityInfo)
     return cityInfo.coordinates

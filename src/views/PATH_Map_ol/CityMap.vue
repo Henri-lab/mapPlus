@@ -1,10 +1,12 @@
 <template>
   <div id="myMap"></div>
+ 
 </template>
 
 <script setup>
 import { ref, onMounted, watch, computed, inject } from 'vue';
 import { useOlMapStore } from '@/stores/olMapStore';
+
 const app = inject('app');
 const olMapStore = useOlMapStore();
 // ol data
@@ -34,9 +36,6 @@ onMounted(() => {
   $map = loadMap();
   app.config.globalProperties.$map = $map;
 });
-
-
-
 </script>
 
 <style lang="scss" scoped></style>

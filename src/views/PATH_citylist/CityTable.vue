@@ -1,5 +1,5 @@
 <template>
-  <div id="cityList">
+  <div class="cityList">
     <div class="search">
       <el-input
         class="search-input"

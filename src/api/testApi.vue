@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+import.meta.env.BASE_URL
 import { onMounted } from 'vue';
 import {
   getIpAddress,
@@ -13,7 +14,6 @@ import {
 } from './index';
 
 onMounted(() => {
-  
   // getIpAddress().then((res) => {
   //   console.log(res, 'ip地址');
   // });

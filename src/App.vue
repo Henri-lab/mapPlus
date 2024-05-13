@@ -1,15 +1,16 @@
 <script setup>
 import testApi from './api/testApi.vue';
 import testStoreMethod from './components/testStoreMethod.vue';
+import '@/assets/main.css';
 //
-import CityMap from './views/PATH_Map_ol/CityMap.vue';
 </script>
 
 <template>
-  <city-map></city-map>
   <testApi />
   <testStoreMethod />
-  <div id="app"></div>
+  <div id="app">
+    <router-view name="cmw"></router-view>
+  </div>
 </template>
 
 <style scoped></style>

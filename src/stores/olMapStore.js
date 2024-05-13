@@ -22,6 +22,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
     const getUrlAliyun = (adcode) => {
         return `https://geo.datav.aliyun.com/areas_v3/bound/geojson?code=${adcode}_full`
     }
+    // 🔴
     let index = 0
     const getLayerWithPolygonByAdcodeByAliyun = async (layerName, adcode) => {
         return new ol.layer.Vector({
@@ -41,6 +42,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
             }
         })
     }
+    // 🔴
     // 添加图层,并保持此名称图层只有一个
     async function addUniqueLayerWithPolygonByAdcodeByAliyun($map, adcode, layerNameUnique) {
         clearLayersByName($map, layerNameUnique)
@@ -49,7 +51,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
     }
 
 
-
+    // ----------------------------------------------------------------
     //根据城市名称获取城市信息进行地图视图的设置 
     //cityName为准确名字！
     const cityInfoCache_olMapStore = ref([])
@@ -78,7 +80,27 @@ export const useOlMapStore = defineStore('olMapStore', () => {
         if (!cityInfoCache_olMapStore.value.find(cityInfo => cityInfo.adcode === adcode))
             cityInfoCache_olMapStore.value.push(cityInfo)
     }
+    // 缓存cityInfo
+    const getCache = () => {
+        // 读取所以本地缓存里的cityInfo
+        const cache1 = []
+        const cache2 = []
+        localStorageManager('get', 'cityInfoCache_cityStore-', cache1)
+        localStorageManager('get', 'cityInfoCache_olMapStore-', cache2)
+        const cityCache = [...cache1, ...cache2]
+        return cityCache
+    }
+    const setCache = () => {
+        const resultArr = []
+        localStorageManager('get', 'cityInfoCache_cityStore-', resultArr)
+        resultArr.forEach(cityInfo => {
+            if (!cityInfoCache_olMapStore.value.find(item => item.adcode === cityInfo.adcode))
+                cityInfoCache_olMapStore.value.push(cityInfo)
+        })
+        localStorageManager('set/random', `cityInfoCache_olMapStore-`, cityInfoCache_olMapStore.value)
+    }
 
+    // 🔴
     const zoomToByCityName = async (cityName, $map) => {
         const city = cityName || defaultCity
         if (city === defaultCity) {
@@ -87,11 +109,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
             zoom.value = 4
         } else {
             // 优先读取所以本地缓存里的cityInfo
-            const cache1 = []
-            const cache2 = []
-            localStorageManager('get', 'cityInfoCache_cityStore-', cache1)
-            localStorageManager('get', 'cityInfoCache_olMapStore-', cache2)
-            const cityCache = [...cache1, ...cache2]
+            const cityCache = getCache()
             if (cityCache.length > 0) {
                 const cityInfo = cityCache.find(cityInfo => cityInfo.city === cityName)
                 if (cityInfo) {
@@ -116,16 +134,7 @@ export const useOlMapStore = defineStore('olMapStore', () => {
         // console.log(longtitude.value, latitude.value, animateZ, cityName)
         // console.log(cityCache)
     }
-
-    const setCache = () => {
-        const resultArr = []
-        localStorageManager('get', 'cityInfoCache_cityStore-', resultArr)
-        resultArr.forEach(cityInfo => {
-            if (!cityInfoCache_olMapStore.value.find(item => item.adcode === cityInfo.adcode))
-                cityInfoCache_olMapStore.value.push(cityInfo)
-        })
-        localStorageManager('set/random', `cityInfoCache_olMapStore-`, cityInfoCache_olMapStore.value)
-    }
+    // // ----------------------------------------------------------------
 
 
 

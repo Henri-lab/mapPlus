@@ -28,19 +28,19 @@ onMounted(async () => {
   //   cityStore.setCache()
 
   // 测试飞行到目标地区+缓存测试
-  async function Fly() {
-    let $map = app.config.globalProperties.$map
-    console.log($map);
-    await cityStore.getCityCoordinates('上海')
-    cityStore.setCache()
-    await cityStore.getCityCoordinates('武汉')
-    cityStore.setCache()
-    // olMapStore.zoomToByCityName('上海市',$map);
-    // olMapStore.zoomToByCityName('武汉市',$map);
-    // olMapStore.zoomToByCityName('成都市',$map);
+  // async function Fly() {
+  //   let $map = app.config.globalProperties.$map
+  //   console.log($map);
+  //   await cityStore.getCityCoordinates('上海')
+  //   cityStore.setCache()
+  //   await cityStore.getCityCoordinates('武汉')
+  //   cityStore.setCache()
+  //   // olMapStore.zoomToByCityName('上海市',$map);
+  //   // olMapStore.zoomToByCityName('武汉市',$map);
+  //   // olMapStore.zoomToByCityName('成都市',$map);
 
-  }
- await Fly();
+  // }
+//  await Fly();
 });
 </script>
 

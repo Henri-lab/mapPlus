@@ -19,6 +19,8 @@ onMounted(() => {
   $map = app.config.globalProperties.$map;
   const city = route.params.city;
   olMapStore.zoomToByCityName(city, $map);
+  olMapStore.getCache();
+  olMapStore.setCache();
   // test
   // olMapStore.zoomToByCityName('上海市',$map)
   // console.log(_city);

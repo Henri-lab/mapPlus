@@ -27,6 +27,8 @@ const tableData = ref([]);
 
 async function getTableData(city) {
   const res = await cityStore.getWeatherByCityName(city);
+  cityStore.getCache();
+  cityStore.setCache();
   tableData.value = [];
   tableData.value.push = res;
 }

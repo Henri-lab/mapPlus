@@ -13,8 +13,7 @@ const app = inject('app');
 let $map = null;
 let adcode = null;
 const red_03_ftSty = featureStyle({
-  fillColor: '#FF0000',
-  fillOpacity: 0.3,
+  fillColor: 'rgba(255, 255, 255, 0.3)',
 });
 async function getAdcode(city) {
   let adcode = null;
@@ -31,7 +30,7 @@ function clearLayersByName($map, layerName) {
     .getLayers()
     .getArray()
     .forEach((layer) => {
-      if (layer.get('name')===layerName) {
+      if (layer.get('name') === layerName) {
         $map.removeLayer(layer);
       }
     });
@@ -47,6 +46,10 @@ async function getPoly(adcode) {
       return ft;
     });
 }
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 onMounted(async () => {
   $map = app.config.globalProperties.$map;
   const city = route.params.city;
@@ -57,9 +60,32 @@ onMounted(async () => {
   );
   clearLayersByName($map, 'https://datav.aliyun.com/' + `adcode:${adcode}`);
   $map.addLayer(layerAliyun);
-  const ft = layerAliyun.getSource().getFeatures();
-  console.log(ft)
-//   ft.setStyle(red_03_ftSty);
+
+  layerAliyun.setStyle(
+    new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: `rgba(100,100,100,0.5)`,
+      }),
+    })
+  );
+  // 闪  
+  //   const time = setInterval(() => {
+  //     let opacity = randomIntFromInterval(0.3, 0.301);
+  //     let a = randomIntFromInterval(100, 101);
+  //     let b = randomIntFromInterval(100, 101);
+  //     let c = randomIntFromInterval(0, 50);
+  //     layerAliyun.setStyle(
+  //       new ol.style.Style({
+  //         fill: new ol.style.Fill({
+  //           color: `rgba(${a},${b},${c}, ${opacity})`,
+  //         }),
+  //       })
+  //     );
+  //   }, 1000);
+
+  //   $map.on('click', () => {
+  //     clearInterval(time);
+  //   });
 
   //test
   //   const lay = await olMapStore.getLayerWithPolygonByAdcodeByAliyun(

@@ -6,6 +6,7 @@ import localStorageManager from '@/util/localStorageManager'
 export const useCityStore = defineStore('cityStore', () => {
 
   const cityUser = ref('')
+  const cityInfoCache_cityStore = ref([])
   // 🔴
   const getCityUser = async () => {
     const address = await getIpAddress()
@@ -57,13 +58,13 @@ export const useCityStore = defineStore('cityStore', () => {
       }
     }
   }
-
-  // 🔴
-  const localCityWithWeatherHistory = ref([])
-  const getWeatherByCityName = async (cityName) => {
-    const res = await getGeoByAddress(cityName)
-    if (!res) return
-    const adcode = res.adcode
+  
+  const requeseWeather_base_byCityName = async (cityName) => {
+    const cityInfo = createCityInfoByCityName(cityName)
+    if (!cityInfo) return 
+    if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
+      cityInfoCache_cityStore.value.push(cityInfo)
+    const adcode = cityInfo.adcode
     const _res = await getWeatherByAdcode(adcode, 'base')
     const city_wtr = {
       reporttime: _res.reporttime,//留作历史记录
@@ -73,17 +74,58 @@ export const useCityStore = defineStore('cityStore', () => {
       windDirection: _res.winddirection,
       windPower: _res.windpower,
     }
-    if (city_wtr.city === cityUser.value) localCityWithWeatherHistory.push(city_wtr.city)
     return city_wtr
   }
 
+
+  const requeseWeather_base = async (adcode) => {
+    const _res = await getWeatherByAdcode(adcode, 'base')
+    const city_wtr = {
+      reporttime: _res.reporttime,//留作历史记录
+      city: _res.city,
+      weather: _res.weather,
+      temperature: _res.temperature_float,
+      windDirection: _res.winddirection,
+      windPower: _res.windpower,
+    }
+    return city_wtr
+  }
+
+
   // ----------------------------------------------------------------
-  // 为map提供支持
-  const cityInfoCache_cityStore = ref([])
+  // 🔴
+  const localCityWithWeatherHistory = ref([])
+  const getWeatherByCityName = async (cityName) => {
+    let city_wtr = {}
+    const cityCache = getCache()
+    if (cityCache.length > 0) {
+      const cityInfo = cityCache.find(cityInfo => cityInfo.city === cityName)
+      if (cityInfo) {
+        const adcode = cityInfo.adcode
+        city_wtr = await requeseWeather_base(adcode)
+
+      } else
+        city_wtr = await requeseWeather_base_byCityName(cityName)
+
+    } else {
+      city_wtr = await requeseWeather_base_byCityName(adcode)
+      if (city_wtr.city === cityUser.value) localCityWithWeatherHistory.push(city_wtr)
+    }
+    return city_wtr
+  }
+
 
   async function requestCoordinatesByCityName(cityName) {
+    const cityInfo = createCityInfoByCityName(cityName)
+    if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
+      cityInfoCache_cityStore.value.push(cityInfo)
+    return cityInfo.coordinates
+  }
+
+  //用于缓存的cityInfo
+  const createCityInfoByCityName = async (cityName) => {
     const res = await getGeoByAddress(cityName)
-    if (!res) return
+    if (!res) return null
     //缓存
     const city = res.city
     const adcode = res.adcode
@@ -91,11 +133,9 @@ export const useCityStore = defineStore('cityStore', () => {
     const level = res.level
     const coordinates = location.split(",").map(item => +item)
     const cityInfo = { city, adcode, coordinates, level }
-    if (!cityInfoCache_cityStore.value.find(cityInfo => cityInfo.adcode === adcode))
-      cityInfoCache_cityStore.value.push(cityInfo)
-
-    return coordinates
+    return cityInfo
   }
+
 
   // 缓存cityInfo
   const getCache = () => {
